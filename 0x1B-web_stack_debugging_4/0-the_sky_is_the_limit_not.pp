@@ -1,6 +1,13 @@
-# Fixes bad `phpp` extensions to `php` in the WordPress file `wp-settings.php`.
+# Increases the amount of traffic on nginx server`.
 
-exec { 'fix-wordpress':
-  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
-  path    => '/usr/local/bin/:/bin/'
+# increase the ULIMIT of the default file
+exec { 'fix-for-nginx':
+  command => 'sed -i "s/15/4096" /etc/default/nginx',
+  path    => '/usr/local/bin/:/bin/',
+}
+
+# restart nginx server
+exec { 'restart-nginx-server':
+  command => '/etc/init.d/nginx restart',
+  path    => '/etc/init.d/'
 }
